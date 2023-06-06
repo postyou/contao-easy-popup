@@ -1,0 +1,31 @@
+<?php $this->extend('block_searchable'); ?>
+
+<?php $this->block('content'); ?>
+
+<?php $this->href = str_replace("|urlattr", "", $this->href) ?>
+
+<?php if ($this->useImage) : ?>
+  <figure class="image_container">
+    <?= $this->embed_pre ?>
+    <a href="#" data-easy-popup="<?= $this->id ?>" <?php if ($this->linkTitle) : ?> title="<?= $this->linkTitle ?>" <?php endif; ?> class="hyperlink_img" <?= $this->attribute ?><?= $this->target ?><?= $this->rel ?>><?php $this->insert('picture_default', $this->picture); ?></a>
+    <?= $this->embed_post ?>
+    <?php if ($this->caption) : ?>
+      <figcaption class="caption"><?= $this->caption ?></figcaption>
+    <?php endif; ?>
+  </figure>
+<?php else : ?>
+  <?= $this->embed_pre ?>
+  <a href="#" data-easy-popup="<?= $this->id ?>" class="hyperlink_txt" title="<?= $this->linkTitle ?>" <?= $this->attribute ?><?= $this->target ?><?= $this->rel ?>><?= $this->link ?></a>
+  <?= $this->embed_post ?>
+<?php endif; ?>
+
+<div class="easy-popup-container overlay" data-easy-popup-content="<?= $this->id ?>">
+  <div class="easy-popup-inside overlay_inside grid">
+    <div class="easy-popup-close-btn overlay-close" data-easy-popup-close="<?= $this->id ?>"></div>
+    <div class="easy-popup-content overlay-content grid">
+      <?= $this->href ?>
+    </div>
+  </div>
+</div>
+
+<?php $this->endblock(); ?>
