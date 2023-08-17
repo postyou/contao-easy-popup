@@ -3,18 +3,17 @@
 declare(strict_types=1);
 
 $header = <<<'EOF'
-    This file is part of postyou/contao-cookiebar-optin.
+    This file is part of postyou/contao-easy-popup.
 
-    (c) POSTYOU Digital- & Filmagentur
+    (c) POSTYOU Werbeagentur
 
     @license LGPL-3.0+
     EOF;
 
 $finder = PhpCsFixer\Finder::create()
-    ->exclude('templates')
     ->in([
         __DIR__.'/src',
-        __DIR__.'/contao/dca',
+        __DIR__.'/contao',
     ])
 ;
 
@@ -23,10 +22,13 @@ $config = new PhpCsFixer\Config();
 return $config
     ->setRiskyAllowed(true)
     ->setRules([
-        '@PHP74Migration' => true,
-        '@PHP74Migration:risky' => true,
+        '@PHP82Migration' => true,
+        '@PHP80Migration:risky' => true,
         '@PhpCsFixer' => true,
         '@PhpCsFixer:risky' => true,
+        'echo_tag_syntax' => ['format' => 'short'],
+        'no_alternative_syntax' => ['fix_non_monolithic_code' => false],
+        'semicolon_after_instruction' => false,
         'header_comment' => ['header' => $header],
     ])
     ->setFinder($finder)

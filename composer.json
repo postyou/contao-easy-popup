@@ -1,44 +1,35 @@
 {
-    "name": "postyou/contao-easy-popup-bundle",
+    "name": "postyou/contao-easy-popup",
     "description": "Bundle to create easy to use pop-ups with nodes extension.",
     "license": "LGPL-3.0-or-later",
     "type": "contao-bundle",
     "authors": [
         {
-            "name": "Postyou",
-            "homepage": "https://github.com/"
+            "name": "Postyou Werbeagentur",
+            "homepage": "https://postyou.de/"
         }
     ],
-    "version": "0.1",
-    "homepage": "https://postyou.de",
     "support": {
-        "issues": "https://github.com/postyou/contao-easy-popup-bundle/issues",
-        "source": "https://github.com/postyou/contao-easy-popup-bundle"
+        "issues": "https://github.com/postyou/contao-easy-popup/issues",
+        "source": "https://github.com/postyou/contao-easy-popup"
     },
     "require": {
-        "php": "^7.4 || ^8.0",
+        "php": "^8.1",
         "contao/core-bundle": "^4.13",
         "symfony/config": "^5.4",
         "symfony/dependency-injection": "^5.4",
         "symfony/http-kernel": "^5.4",
-        "terminal42/contao-node": "*"
+        "terminal42/contao-node": "^1.5"
     },
     "require-dev": {
-        "contao/manager-plugin": "^2.0",
-        "phpunit/phpunit": "^9.5",
-        "symfony/phpunit-bridge": "^6.1"
+        "contao/manager-plugin": "^2.0"
     },
     "conflict": {
         "contao/manager-plugin": "<2.0 || >=3.0"
     },
     "autoload": {
         "psr-4": {
-            "Postyou\\ContaoEasyPopup\\": "src/"
-        }
-    },
-    "autoload-dev": {
-        "psr-4": {
-            "Postyou\\ContaoEasyPopup\\Tests\\": "tests/"
+            "Postyou\\ContaoEasyPopupBundle\\": "src/"
         }
     },
     "config": {
@@ -50,16 +41,6 @@
         }
     },
     "extra": {
-        "contao-manager-plugin": "Postyou\\ContaoEasyPopup\\ContaoManager\\Plugin"
-    },
-    "scripts": {
-        "all": [
-            "@unit-tests",
-            "@ecs",
-            "@phpstan"
-        ],
-        "ecs": "@php tools/ecs/vendor/bin/ecs check src tests --config ecs.php --fix --ansi",
-        "phpstan": "@php tools/phpstan/vendor/bin/phpstan analyze --ansi",
-        "unit-tests": "@php vendor/bin/phpunit --colors=always"
+        "contao-manager-plugin": "Postyou\\ContaoEasyPopupBundle\\ContaoManager\\Plugin"
     }
 }
