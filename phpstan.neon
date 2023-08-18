@@ -8,7 +8,6 @@ parameters:
 
     paths:
         - %currentWorkingDirectory%/src
-        - %currentWorkingDirectory%/tests
 
     universalObjectCratesClasses:
         - Contao\Model
