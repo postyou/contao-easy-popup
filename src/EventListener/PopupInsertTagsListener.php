@@ -13,8 +13,7 @@ declare(strict_types=1);
 namespace Postyou\ContaoEasyPopupBundle\EventListener;
 
 use Contao\CoreBundle\DependencyInjection\Attribute\AsHook;
-use Contao\FrontendTemplate;
-use Terminal42\NodeBundle\NodeManager;
+use Postyou\ContaoEasyPopupBundle\PopupManager;
 
 #[AsHook('replaceInsertTags')]
 class PopupInsertTagsListener
@@ -22,7 +21,7 @@ class PopupInsertTagsListener
     public const TAG = 'popup_url';
 
     public function __construct(
-        protected readonly NodeManager $nodeManager,
+        protected readonly PopupManager $popupManager,
     ) {
     }
 
@@ -40,13 +39,10 @@ class PopupInsertTagsListener
         }
 
         $nodeId = (int) $chunks[1];
-
-        $popup = new FrontendTemplate('easy_popup');
-        $popup->id = $nodeId;
-        $popup->content = $this->nodeManager->generateSingle($nodeId) ?? '';
+        $popup = $this->popupManager->getPopup($nodeId);
 
         $k = array_key_last($tags);
-        $tags[$k] = str_replace('</body>', "{$popup->parse()}</body>", $tags[$k]);
+        $tags[$k] = str_replace('</body>', "{$popup}</body>", $tags[$k]);
 
         return '#easy-popup-'.$nodeId;
     }
