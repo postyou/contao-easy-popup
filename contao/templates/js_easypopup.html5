@@ -1,0 +1,31 @@
+<?php
+
+// Add the popup style sheet
+$GLOBALS['TL_CSS'][] = $this->asset('easy-popup.css', 'postyou_contao_easy_popup');
+
+?>
+
+<script>
+const popupsLinks = document.querySelectorAll('a[href^="#easy-popup-"]');
+const popupsMap = new Map();
+
+document.addEventListener('DOMContentLoaded', () => {
+    popupsLinks.forEach((el) => {
+        const href = el.getAttribute('href');
+        const id = href.replace('#easy-popup-', '');
+
+        popupsMap.set(id, document.querySelector(href));
+
+        el.addEventListener('click', (e) => {
+            e.preventDefault();
+
+            popupsMap.get(id).classList.add('active');
+        });
+
+        document.querySelector(`[data-easy-popup-close="${id}"]`).addEventListener('click', () => {
+            popupsMap.get(id).classList.remove('active');
+        });
+    });
+});
+
+</script>

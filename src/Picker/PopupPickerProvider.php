@@ -15,10 +15,24 @@ namespace Postyou\ContaoEasyPopupBundle\Picker;
 use Contao\CoreBundle\Picker\AbstractInsertTagPickerProvider;
 use Contao\CoreBundle\Picker\DcaPickerProviderInterface;
 use Contao\CoreBundle\Picker\PickerConfig;
-use Contao\Database;
 
 class PopupPickerProvider extends AbstractInsertTagPickerProvider implements DcaPickerProviderInterface
 {
+    public function getName(): string
+    {
+        return 'popupPicker';
+    }
+
+    public function supportsContext($context): bool
+    {
+        return 'link' === $context;
+    }
+
+    public function supportsValue(PickerConfig $config): bool
+    {
+        return $this->isMatchingInsertTag($config);
+    }
+
     public function getDcaTable(PickerConfig $config = null): string
     {
         return 'tl_node';
@@ -28,47 +42,23 @@ class PopupPickerProvider extends AbstractInsertTagPickerProvider implements Dca
     {
         $attributes = ['fieldType' => 'radio'];
 
-        if ($fieldType = $config->getExtra('fieldType')) {
-            $attributes['fieldType'] = $fieldType;
-        }
-
         if ($this->supportsValue($config)) {
-            $attributes['value'] = array_map('intval', explode(',', $config->getValue()));
-        }
+            $attributes['value'] = $this->getInsertTagValue($config);
 
-        if (\is_array($rootNodes = $config->getExtra('rootNodes'))) {
-            $attributes['rootNodes'] = $rootNodes;
+            if ($flags = $this->getInsertTagFlags($config)) {
+                $attributes['flags'] = $flags;
+            }
         }
-
-        $attributes['rootNodes'] = Database::getInstance()->prepare('SELECT id FROM tl_node WHERE pid IN (SELECT id FROM tl_node WHERE `type` = ?)')->execute('popup')->fetchEach('id');
 
         return $attributes;
     }
 
+    /**
+     * @param int $value
+     */
     public function convertDcaValue(PickerConfig $config, $value): string|int
     {
         return sprintf($this->getInsertTag($config), $value);
-    }
-
-    public function getName(): string
-    {
-        return 'nodePicker';
-    }
-
-    public function supportsContext($context): bool
-    {
-        return 'node' === $context || 'link' === $context;
-    }
-
-    public function supportsValue(PickerConfig $config): bool
-    {
-        foreach (explode(',', $config->getValue()) as $id) {
-            if (!is_numeric($id)) {
-                return false;
-            }
-        }
-
-        return true;
     }
 
     protected function getRouteParameters(PickerConfig $config = null): array
@@ -78,6 +68,6 @@ class PopupPickerProvider extends AbstractInsertTagPickerProvider implements Dca
 
     protected function getDefaultInsertTag(): string
     {
-        return '{{insert_node::%s}}';
+        return '{{popup_url::%s}}';
     }
 }
