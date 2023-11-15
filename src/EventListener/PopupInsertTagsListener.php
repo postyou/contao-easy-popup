@@ -22,8 +22,7 @@ class PopupInsertTagsListener
 
     public function __construct(
         protected readonly PopupManager $popupManager,
-    ) {
-    }
+    ) {}
 
     /**
      * @param array<string> $flags
@@ -41,8 +40,7 @@ class PopupInsertTagsListener
         $nodeId = (int) $chunks[1];
         $popup = $this->popupManager->getPopup($nodeId);
 
-        $k = array_key_last($tags);
-        $tags[$k] = str_replace('</body>', "{$popup}</body>", $tags[$k]);
+        $GLOBALS['TL_BODY'][] = $popup;
 
         return '#easy-popup-'.$nodeId;
     }
