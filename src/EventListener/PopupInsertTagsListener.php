@@ -20,6 +20,8 @@ class PopupInsertTagsListener
 {
     public const TAG = 'popup_url';
 
+    private static $popupCache = [];
+
     public function __construct(
         protected readonly PopupManager $popupManager,
     ) {}
@@ -38,10 +40,21 @@ class PopupInsertTagsListener
         }
 
         $nodeId = (int) $chunks[1];
+        $value = '#easy-popup-'.$nodeId;
+
+        if (isset(self::$popupCache[$nodeId])) {
+            return $value;
+        }
+
+        // Cache the id, so the popup is only generated once
+        // Has to be done first to prevent infinite loops, if the popup contains the insert tag
+        self::$popupCache[$nodeId] = true;
+
         $popup = $this->popupManager->getPopup($nodeId);
 
+        // Add popup to the end of the page
         $GLOBALS['TL_BODY'][] = $popup;
 
-        return '#easy-popup-'.$nodeId;
+        return $value;
     }
 }
