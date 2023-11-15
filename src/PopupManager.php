@@ -21,8 +21,7 @@ class PopupManager
     public function __construct(
         protected readonly NodeManager $nodeManager,
         protected readonly InsertTagParser $insertTagParser,
-    ) {
-    }
+    ) {}
 
     public function getPopup(int $nodeId): string
     {

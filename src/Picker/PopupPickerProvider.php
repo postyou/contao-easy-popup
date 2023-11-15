@@ -56,7 +56,7 @@ class PopupPickerProvider extends AbstractInsertTagPickerProvider implements Dca
     /**
      * @param int $value
      */
-    public function convertDcaValue(PickerConfig $config, $value): string|int
+    public function convertDcaValue(PickerConfig $config, $value): int|string
     {
         return sprintf($this->getInsertTag($config), $value);
     }
