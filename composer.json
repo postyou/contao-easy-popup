@@ -26,6 +26,9 @@
         "contao/manager-plugin": "^2.0",
         "oveleon/contao-component-style-manager": "^3.4"
     },
+    "suggest": {
+        "oveleon/contao-component-style-manager": "Use the style manager to add css classes to the pop-up."
+    },
     "conflict": {
         "contao/manager-plugin": "<2.0 || >=3.0"
     },
