@@ -14,6 +14,7 @@ namespace Postyou\ContaoEasyPopupBundle;
 
 use Contao\CoreBundle\InsertTag\InsertTagParser;
 use Contao\FrontendTemplate;
+use Terminal42\NodeBundle\Model\NodeModel;
 use Terminal42\NodeBundle\NodeManager;
 
 class PopupManager
@@ -27,7 +28,11 @@ class PopupManager
     {
         $popup = new FrontendTemplate('easy_popup');
 
-        $popup->id = $nodeId;
+        $nodeModel = NodeModel::findOneBy(['id=?', 'type=?'], [$nodeId, NodeModel::TYPE_CONTENT]);
+
+        $popup->setData($nodeModel->row());
+
+        $popup->cssClass = $nodeModel->cssClass ? $nodeModel->cssClass.' ' : '';
         $popup->content = $this->nodeManager->generateSingle($nodeId) ?? '';
 
         return $this->insertTagParser->replace($popup->parse());

@@ -15,6 +15,7 @@
     },
     "require": {
         "php": "^8.1",
+        "composer-runtime-api": "^2.0",
         "contao/core-bundle": "^4.13|^5.2",
         "symfony/config": "^5.4|^6.0",
         "symfony/dependency-injection": "^5.4|^6.0",
@@ -22,7 +23,11 @@
         "terminal42/contao-node": "^1.5"
     },
     "require-dev": {
-        "contao/manager-plugin": "^2.0"
+        "contao/manager-plugin": "^2.0",
+        "oveleon/contao-component-style-manager": "^3.4"
+    },
+    "suggest": {
+        "oveleon/contao-component-style-manager": "Use the style manager to add css classes to the pop-up."
     },
     "conflict": {
         "contao/manager-plugin": "<2.0 || >=3.0"

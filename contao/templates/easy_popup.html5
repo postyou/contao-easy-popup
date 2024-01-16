@@ -1,6 +1,6 @@
 
 <!-- indexer::stop -->
-<div id="easy-popup-<?= $this->id ?>" class="easy-popup-container overlay">
+<div id="easy-popup-<?= $this->id ?>" class="<?= $this->cssClass ?>easy-popup-container overlay">
     <div class="easy-popup-inside overlay_inside grid">
         <div class="easy-popup-close-btn overlay-close" data-easy-popup-close="<?= $this->id ?>"></div>
 
