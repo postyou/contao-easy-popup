@@ -11,7 +11,7 @@ This adds easy to use popups to the [Contao CMS](https://www.contao.org).
 
 1. Include the `js_easypopup.html5` template in the page layout
 2. Create a node article in the backend module `Content > Nodes`
-3. Select the created node in a link picker widget or use the insert tag directly: `<a href="{{popup_url::NODE_ID}}">Open popup</a>` directly
+3. Select the created node in a link picker widget or use the insert tag directly: `<a href="{{popup_url::NODE_ID}}">Open popup</a>`
 4. Done! The popup content is inserted at the end of the HTML body and can be displayed by clicking the link
 
 ## Configuration
