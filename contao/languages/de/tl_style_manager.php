@@ -10,4 +10,4 @@ declare(strict_types=1);
  * @license LGPL-3.0+
  */
 
-$GLOBALS['TL_LANG']['tl_style_manager']['extendNode'] = ['Nodes', 'Stellt die CSS-Klassen in Nodes zur Verfügung.'];
+$GLOBALS['TL_LANG']['tl_style_manager']['extendNode'] = ['Popup Nodes', 'Stellt die CSS-Klassen in Nodes zur Verfügung.'];
