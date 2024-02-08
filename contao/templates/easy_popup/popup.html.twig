@@ -1,0 +1,63 @@
+{% set popup_attributes = attrs(popup_attributes|default)
+    .set('id', 'easy-popup-' ~ id)
+    .addClass([cssClass, 'easy-popup-container'])
+%}
+
+{% set searchable = searchable|default(false) %}
+
+{% if searchable is defined and not searchable %}
+<!-- indexer::stop -->
+{%- endif %}
+
+{% block popup %}
+    <dialog{{ popup_attributes }}>
+        <div{{ attrs(popup_inside_attributes|default).addClass('easy-popup-inside') }}>
+            {% block close %}
+                <form method="dialog">
+                    <button{{ attrs(popup_close_attributes|default).addClass('easy-popup-close') }}>
+                        {% block close_icon %}{% endblock %}
+                    </button>
+                </form>
+            {% endblock %}
+
+            {% block inner %}
+                <div{{ attrs(popup_content_attributes|default).addClass('easy-popup-content') }}>
+                    {{ content|raw }}
+                </div>
+            {% endblock %}
+        </div>
+    </dialog>
+{% endblock %}
+
+{% if searchable is defined and not searchable -%}
+<!-- indexer::continue -->
+{% endif %}
+
+{% block script %}
+    {% add "easy_popup_js" to body %}
+        <script>
+            const popupLinks = document.querySelectorAll('a[href^="#easy-popup-"]');
+            const popupMap = new Map();
+
+            document.addEventListener('DOMContentLoaded', () => {
+                popupLinks.forEach((el) => {
+                    const id = el.getAttribute('href');
+                    
+                    if (!popupMap.has(id)) {
+                        popupMap.set(id, document.querySelector(id));
+                    }
+
+                    el.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        popupMap.get(id).showModal();
+                        document.documentElement.classList.add('easy-popup-open');
+                    });
+
+                    popupMap.get(id).addEventListener('close', () => {
+                        document.documentElement.classList.remove('easy-popup-open');
+                    });
+                });
+            });
+        </script>
+    {% endadd %}
+{% endblock %}

@@ -12,6 +12,7 @@ declare(strict_types=1);
 
 namespace Postyou\ContaoEasyPopupBundle\EventListener\DataContainer;
 
+use Composer\InstalledVersions;
 use Contao\CoreBundle\DependencyInjection\Attribute\AsCallback;
 use Symfony\Component\Asset\Packages;
 
@@ -24,6 +25,8 @@ class AddBackendAssetsCallback
 
     public function __invoke(): void
     {
-        $GLOBALS['TL_CSS'][] = $this->packages->getUrl('backend.css', 'postyou_contao_easy_popup');
+        if (InstalledVersions::isInstalled('oveleon/contao-component-style-manager')) {
+            $GLOBALS['TL_CSS'][] = $this->packages->getUrl('backend.css', 'postyou_contao_easy_popup');
+        }
     }
 }
