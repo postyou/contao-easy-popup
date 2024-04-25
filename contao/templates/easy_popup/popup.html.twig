@@ -15,7 +15,7 @@
             {% block close %}
                 <form method="dialog">
                     <button{{ attrs(popup_close_attributes|default).addClass('easy-popup-close') }}>
-                        {% block close_icon %}{% endblock %}
+                        {%- block close_icon %}&times;{% endblock -%}
                     </button>
                 </form>
             {% endblock %}
