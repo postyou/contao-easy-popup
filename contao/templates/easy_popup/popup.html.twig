@@ -3,9 +3,7 @@
     .addClass([cssClass, 'easy-popup-container'])
 %}
 
-{% set searchable = searchable|default(false) %}
-
-{% if searchable is defined and not searchable %}
+{% if not searchable|default %}
 <!-- indexer::stop -->
 {%- endif %}
 
@@ -29,7 +27,7 @@
     </dialog>
 {% endblock %}
 
-{% if searchable is defined and not searchable -%}
+{% if not searchable|default -%}
 <!-- indexer::continue -->
 {% endif %}
 
