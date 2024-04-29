@@ -1,0 +1,12 @@
+{% extends "@Contao/content_element/_base.html.twig" %}
+{% use "@Contao/component/_popup.html.twig" %}
+
+{% block content %}
+    {% if as_editor_view %}
+        {% block editor_view %}
+            {{ popup.content|raw }}
+        {% endblock %}
+    {% else %}
+        {{ block('popup_component') }}
+    {% endif %}
+{% endblock %}

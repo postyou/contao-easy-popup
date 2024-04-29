@@ -45,14 +45,14 @@ class PopupInsertTag
             throw new InvalidInsertTagException(sprintf('Invalid node id %s for popup insert tag.', $nodeId));
         }
 
-        $this->addPopupToPage($nodeId);
+        $this->addPopupToPage($nodeId, 'easy-popup-'.$nodeId);
 
         return new InsertTagResult('#easy-popup-'.$nodeId);
     }
 
-    private function addPopupToPage(int $nodeId): void
+    private function addPopupToPage(int $nodeId, string $key): void
     {
-        if (isset(self::$popupCache[$nodeId])) {
+        if (isset(self::$popupCache[$nodeId]) || \array_key_exists($key, $GLOBALS['TL_BODY'] ?? [])) {
             return;
         }
 
@@ -60,11 +60,15 @@ class PopupInsertTag
         self::$popupCache[$nodeId] = true;
 
         $nodeModel = NodeModel::findOneBy(['id=?', 'type=?'], [$nodeId, NodeModel::TYPE_CONTENT]);
-
-        // Add popup to the end of the page
-        $GLOBALS['TL_BODY'][] = $this->twig->render('@Contao/easy_popup/popup.html.twig', [
+        
+        $popup = [
             ...$nodeModel->row(),
             'content' => $this->nodeManager->generateSingle($nodeId),
+        ];
+
+        // Add popup to the end of the page
+        $GLOBALS['TL_BODY'][$key] = $this->twig->render('@Contao/component/_popup.html.twig', [
+            'popup' => $popup,
         ]);
     }
 }
