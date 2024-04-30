@@ -68,7 +68,7 @@ class PopupManager
         return $popup;
     }
 
-    protected function getTimeFromInputUnit(string $input): false|int
+    protected function getTimeFromInputUnit(string $input): int|false
     {
         $input = StringUtil::deserialize($input, true);
 
