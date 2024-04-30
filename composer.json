@@ -27,6 +27,7 @@
         "contao/manager-plugin": "^2.0",
         "oveleon/contao-component-style-manager": "^3.4",
         "contao/easy-coding-standard": "^6.0",
+        "contao/rector": "^1.0",
         "phpstan/phpstan": "^1.10",
         "phpstan/phpstan-symfony": "^1.3"
     },
