@@ -33,7 +33,7 @@ class PopupPickerProvider extends AbstractInsertTagPickerProvider implements Dca
         return $this->isMatchingInsertTag($config);
     }
 
-    public function getDcaTable(PickerConfig $config = null): string
+    public function getDcaTable(?PickerConfig $config = null): string
     {
         return 'tl_node';
     }
@@ -61,7 +61,7 @@ class PopupPickerProvider extends AbstractInsertTagPickerProvider implements Dca
         return sprintf($this->getInsertTag($config), $value);
     }
 
-    protected function getRouteParameters(PickerConfig $config = null): array
+    protected function getRouteParameters(?PickerConfig $config = null): array
     {
         return ['do' => 'nodes'];
     }
