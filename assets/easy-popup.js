@@ -21,6 +21,7 @@ class EasyPopup {
     #showAfterDelay() {
         if (!this.#isTimeoutActive()) {
             this.showModal(this.delay);
+            this.#setTimeout();
         }
     }
 
@@ -36,6 +37,7 @@ class EasyPopup {
             if (e.clientY < 10) {
                 document.removeEventListener('mouseleave', handleMouseLeave);
                 this.showModal(this.delay);
+                this.#setTimeout();
             }
         };
 
@@ -70,8 +72,6 @@ class EasyPopup {
             this.popup.showModal();
             document.documentElement.classList.add('easy-popup-open');
         }, delay);
-
-        this.#setTimeout();
     }
 
     #onClose() {

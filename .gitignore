@@ -1,12 +1,7 @@
-# Composer
-/composer.lock
-/vendor/
-
-# PhpUnit
-/.phpunit.result.cache
-/phpunit.xml
-
-# Tools
-/tools/*/vendor
-.vscode/
 .php-version
+composer.lock
+/.vscode/
+/node_modules/
+/tools/*/vendor
+/vendor/
+package-lock.json
