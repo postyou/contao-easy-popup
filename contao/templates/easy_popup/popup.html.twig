@@ -33,29 +33,6 @@
 
 {% block script %}
     {% add "easy_popup_js" to body %}
-        <script>
-            const popupLinks = document.querySelectorAll('a[href^="#easy-popup-"]');
-            const popupMap = new Map();
-
-            document.addEventListener('DOMContentLoaded', () => {
-                popupLinks.forEach((el) => {
-                    const id = el.getAttribute('href');
-                    
-                    if (!popupMap.has(id)) {
-                        popupMap.set(id, document.querySelector(id));
-                    }
-
-                    el.addEventListener('click', (e) => {
-                        e.preventDefault();
-                        popupMap.get(id).showModal();
-                        document.documentElement.classList.add('easy-popup-open');
-                    });
-
-                    popupMap.get(id).addEventListener('close', () => {
-                        document.documentElement.classList.remove('easy-popup-open');
-                    });
-                });
-            });
-        </script>
+        <script src="{{ asset('easy-popup.js', 'postyou_contao_easy_popup') }}"></script>
     {% endadd %}
 {% endblock %}

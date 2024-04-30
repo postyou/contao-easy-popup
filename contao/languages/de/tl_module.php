@@ -10,5 +10,4 @@ declare(strict_types=1);
  * @license LGPL-3.0+
  */
 
-$GLOBALS['TL_LANG']['MSC']['popupPicker'] = 'Popup';
-$GLOBALS['TL_LANG']['FMD']['easy_popup'] = ['Easy Popup', 'Generates a popup.'];
+$GLOBALS['TL_LANG']['tl_module']['popup'] = ['Popup', 'Bitte wählen Sie das Popup aus, das angezeigt werden soll.'];

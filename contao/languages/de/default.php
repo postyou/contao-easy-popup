@@ -11,3 +11,4 @@ declare(strict_types=1);
  */
 
 $GLOBALS['TL_LANG']['MSC']['popupPicker'] = 'Popup';
+$GLOBALS['TL_LANG']['FMD']['easy_popup'] = ['Easy Popup', 'Generiert ein Popup.'];

@@ -16,21 +16,13 @@ use Contao\CoreBundle\DependencyInjection\Attribute\AsInsertTag;
 use Contao\CoreBundle\InsertTag\Exception\InvalidInsertTagException;
 use Contao\CoreBundle\InsertTag\InsertTagResult;
 use Contao\CoreBundle\InsertTag\ResolvedInsertTag;
-use Terminal42\NodeBundle\Model\NodeModel;
-use Terminal42\NodeBundle\NodeManager;
-use Twig\Environment;
+use Postyou\ContaoEasyPopupBundle\Popup\PopupManager;
 
 #[AsInsertTag('popup_url')]
 class PopupInsertTag
 {
-    /**
-     * @var array<int, bool>
-     */
-    private static $popupCache = [];
-
     public function __construct(
-        protected readonly Environment $twig,
-        protected readonly NodeManager $nodeManager,
+        protected readonly PopupManager $popupManager,
     ) {}
 
     public function __invoke(ResolvedInsertTag $insertTag): InsertTagResult
@@ -45,26 +37,18 @@ class PopupInsertTag
             throw new InvalidInsertTagException(sprintf('Invalid node id %s for popup insert tag.', $nodeId));
         }
 
-        $this->addPopupToPage($nodeId);
+        $this->addPopupToPage($nodeId, 'easy-popup-'.$nodeId);
 
         return new InsertTagResult('#easy-popup-'.$nodeId);
     }
 
-    private function addPopupToPage(int $nodeId): void
+    private function addPopupToPage(int $nodeId, string $key): void
     {
-        if (isset(self::$popupCache[$nodeId])) {
+        if (\array_key_exists($key, $GLOBALS['TL_BODY'] ?? [])) {
             return;
         }
 
-        // Cache the id, so the popup is only generated once
-        self::$popupCache[$nodeId] = true;
-
-        $nodeModel = NodeModel::findOneBy(['id=?', 'type=?'], [$nodeId, NodeModel::TYPE_CONTENT]);
-
         // Add popup to the end of the page
-        $GLOBALS['TL_BODY'][] = $this->twig->render('@Contao/easy_popup/popup.html.twig', [
-            ...$nodeModel->row(),
-            'content' => $this->nodeManager->generateSingle($nodeId),
-        ]);
+        $GLOBALS['TL_BODY'][$key] = $this->popupManager->generate($nodeId);
     }
 }

@@ -15,7 +15,7 @@ use Contao\CoreBundle\DataContainer\PaletteManipulator;
 use Oveleon\ContaoComponentStyleManager\StyleManager\StyleManager;
 
 $GLOBALS['TL_DCA']['tl_node']['palettes']['__selector__'][] = 'easyPopupSettings';
-$GLOBALS['TL_DCA']['tl_node']['subpalettes']['easyPopupSettings'] = 'cssClass';
+$GLOBALS['TL_DCA']['tl_node']['subpalettes']['easyPopupSettings'] = 'popupDelay,popupTimeout,showPopupOnLeave,cssClass';
 
 $GLOBALS['TL_DCA']['tl_node']['fields']['easyPopupSettings'] = [
     'inputType' => 'checkbox',
@@ -23,9 +23,31 @@ $GLOBALS['TL_DCA']['tl_node']['fields']['easyPopupSettings'] = [
     'sql' => ['type' => 'boolean', 'default' => false],
 ];
 
+$GLOBALS['TL_DCA']['tl_node']['fields']['popupTimeout'] = [
+    'inputType' => 'inputUnit',
+    'options' => ['hours', 'minutes', 'seconds'],
+    'reference' => &$GLOBALS['TL_LANG']['tl_node']['popup']['timeUnits'],
+    'eval' => ['rgxp' => 'digit', 'tl_class' => 'w25'],
+    'sql' => ['type' => 'string', 'length' => 255, 'notnull' => true, 'default' => ''],
+];
+
+$GLOBALS['TL_DCA']['tl_node']['fields']['popupDelay'] = [
+    'inputType' => 'inputUnit',
+    'options' => ['hours', 'minutes', 'seconds'],
+    'reference' => &$GLOBALS['TL_LANG']['tl_node']['popup']['timeUnits'],
+    'eval' => ['rgxp' => 'digit', 'tl_class' => 'w25'],
+    'sql' => ['type' => 'string', 'length' => 255, 'notnull' => true, 'default' => ''],
+];
+
+$GLOBALS['TL_DCA']['tl_node']['fields']['showPopupOnLeave'] = [
+    'inputType' => 'checkbox',
+    'eval' => ['tl_class' => 'w25 m12'],
+    'sql' => ['type' => 'boolean', 'default' => false],
+];
+
 $GLOBALS['TL_DCA']['tl_node']['fields']['cssClass'] = [
     'inputType' => 'text',
-    'eval' => ['tl_class' => 'w50'],
+    'eval' => ['tl_class' => 'w25 clr'],
     'sql' => ['type' => 'string', 'length' => 255, 'default' => ''],
 ];
 
