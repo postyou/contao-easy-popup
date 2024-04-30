@@ -10,45 +10,64 @@ declare(strict_types=1);
  * @license LGPL-3.0+
  */
 
-namespace Postyou\ContaoEasyPopupBundle\Controller;
+namespace Postyou\ContaoEasyPopupBundle\Popup;
 
-use Contao\ContentModel;
 use Contao\CoreBundle\String\HtmlAttributes;
-use Contao\CoreBundle\Twig\FragmentTemplate;
-use Contao\ModuleModel;
 use Contao\StringUtil;
 use Terminal42\NodeBundle\Model\NodeModel;
 use Terminal42\NodeBundle\NodeManager;
+use Twig\Environment;
 
-trait EasyPopupFragment
+class PopupManager
 {
+    /**
+     * @var array<int, bool>
+     */
+    private static $locked = [];
+
+    /**
+     * @var array<int, string>
+     */
+    private static $popupCache = [];
+
     public function __construct(
-        private readonly NodeManager $nodeManager,
+        protected readonly Environment $twig,
+        protected readonly NodeManager $nodeManager,
     ) {}
 
-    protected function prepareTemplate(FragmentTemplate &$template, ContentModel|ModuleModel $model): void
+    public function generate(int $nodeId): string
     {
-        $nodeId = (int) $model->popup;
+        if (isset(self::$popupCache[$nodeId])) {
+            return self::$popupCache[$nodeId];
+        }
+
+        if (isset(self::$locked[$nodeId])) {
+            return '';
+        }
+
+        self::$locked[$nodeId] = true;
+
         $nodeModel = NodeModel::findOneBy(['id=?', 'type=?'], [$nodeId, NodeModel::TYPE_CONTENT]);
 
         $attrs = (new HtmlAttributes())
-            ->setIfExists('data-timeout', $this->fromSerialized($nodeModel->popupTimeout))
-            ->setIfExists('data-delay', $this->fromSerialized($nodeModel->popupDelay))
+            ->setIfExists('data-timeout', $this->getTimeFromInputUnit($nodeModel->popupTimeout))
+            ->setIfExists('data-delay', $this->getTimeFromInputUnit($nodeModel->popupDelay))
             ->setIfExists('data-show-on-leave', $nodeModel->showPopupOnLeave)
         ;
 
-        $template->set('popup_attributes', $attrs);
-
-        $template->set('popup', [
+        $popup = $this->twig->render('@Contao/easy_popup/popup.html.twig', [
             ...$nodeModel->row(),
             'content' => $this->nodeManager->generateSingle($nodeId),
+            'popup_attributes' => $attrs,
         ]);
 
-        // Don't add the popup to the end of the body
-        $GLOBALS['TL_BODY']['easy-popup-'.$nodeId] = '';
+        self::$popupCache[$nodeId] = $popup;
+        unset(self::$locked[$nodeId]);
+
+        return $popup;
     }
 
-    protected function fromSerialized(string $input): int
+    protected function getTimeFromInputUnit(string $input): int
     {
         $input = StringUtil::deserialize($input, true);
 

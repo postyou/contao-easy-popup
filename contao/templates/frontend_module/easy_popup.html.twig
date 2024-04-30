@@ -1,6 +1,5 @@
 {% extends "@Contao/frontend_module/_base.html.twig" %}
-{% use "@Contao/component/_popup.html.twig" %}
 
 {% block content %}
-    {{ block('popup_component') }}
+    {{ popup|raw }}
 {% endblock %}
