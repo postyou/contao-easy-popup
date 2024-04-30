@@ -1,7 +1,6 @@
 includes:
     - tools/phpstan/vendor/phpstan/phpstan-symfony/extension.neon
     - tools/phpstan/vendor/phpstan/phpstan-symfony/rules.neon
-    - tools/phpstan/vendor/thecodingmachine/phpstan-strict-rules/phpstan-strict-rules.neon
 
 parameters:
     level: max
@@ -11,4 +10,3 @@ parameters:
 
     universalObjectCratesClasses:
         - Contao\Model
-        - Contao\Template
