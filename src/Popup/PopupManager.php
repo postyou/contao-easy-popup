@@ -14,6 +14,8 @@ namespace Postyou\ContaoEasyPopupBundle\Popup;
 
 use Contao\CoreBundle\String\HtmlAttributes;
 use Contao\StringUtil;
+use Contao\Template;
+use Symfony\Component\Asset\Packages;
 use Terminal42\NodeBundle\Model\NodeModel;
 use Terminal42\NodeBundle\NodeManager;
 use Twig\Environment;
@@ -33,7 +35,9 @@ class PopupManager
     public function __construct(
         protected readonly Environment $twig,
         protected readonly NodeManager $nodeManager,
-    ) {}
+        protected readonly Packages $packages,
+    ) {
+    }
 
     public function generate(int $nodeId): string
     {
@@ -50,17 +54,27 @@ class PopupManager
         $nodeModel = NodeModel::findOneBy(['id=?', 'type=?'], [$nodeId, NodeModel::TYPE_CONTENT]);
         $delay = $this->getTimeFromInputUnit($nodeModel->popupDelay);
 
-        $attrs = (new HtmlAttributes())
-            ->setIfExists('data-timeout', $this->getTimeFromInputUnit($nodeModel->popupTimeout))
-            ->set('data-delay', $delay, $delay >= 0)
-            ->setIfExists('data-show-on-leave', $nodeModel->showPopupOnLeave)
-        ;
+        $attrs = [];
+
+        if ($timeout = $this->getTimeFromInputUnit($nodeModel->popupTimeout)) {
+            $attrs[] = 'data-timeout='.$timeout;
+        }
+
+        if (($delay = $this->getTimeFromInputUnit($nodeModel->popupDelay)) !== false) {
+            $attrs[] = 'data-delay='.$delay;
+        }
+
+        if ($nodeModel->showPopupOnLeave) {
+            $attrs[] = 'data-show-on-leave';
+        }
 
         $popup = $this->twig->render('@Contao/easy_popup/popup.html.twig', [
             ...$nodeModel->row(),
             'content' => $this->nodeManager->generateSingle($nodeId),
-            'popup_attributes' => $attrs,
+            'popup_attributes' => \implode(' ', $attrs),
         ]);
+
+        $GLOBALS['TL_BODY']['easy_popup_js'] = Template::generateScriptTag($this->packages->getUrl('easy-popup.js', 'postyou_contao_easy_popup'));
 
         self::$popupCache[$nodeId] = $popup;
         unset(self::$locked[$nodeId]);

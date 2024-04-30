@@ -1,25 +1,20 @@
-{% set popup_attributes = attrs(popup_attributes|default)
-    .set('id', 'easy-popup-' ~ id)
-    .addClass([cssClass, 'easy-popup-container'])
-%}
-
 {% if not searchable|default %}
 <!-- indexer::stop -->
 {%- endif %}
 
 {% block popup %}
-    <dialog{{ popup_attributes }}>
-        <div{{ attrs(popup_inside_attributes|default).addClass('easy-popup-inside') }}>
+    <dialog id="easy-popup-{{ id }}" class="easy-popup-container" {{ popup_attributes }}>
+        <div class="easy-popup-inside">
             {% block close %}
                 <form method="dialog">
-                    <button{{ attrs(popup_close_attributes|default).addClass('easy-popup-close') }}>
+                    <button class="easy-popup-close">
                         {%- block close_icon %}&times;{% endblock -%}
                     </button>
                 </form>
             {% endblock %}
 
             {% block inner %}
-                <div{{ attrs(popup_content_attributes|default).addClass('easy-popup-content') }}>
+                <div class="easy-popup-content">
                     {{ content|raw }}
                 </div>
             {% endblock %}
@@ -30,9 +25,3 @@
 {% if not searchable|default -%}
 <!-- indexer::continue -->
 {% endif %}
-
-{% block script %}
-    {% add "easy_popup_js" to body %}
-        <script src="{{ asset('easy-popup.js', 'postyou_contao_easy_popup') }}"></script>
-    {% endadd %}
-{% endblock %}

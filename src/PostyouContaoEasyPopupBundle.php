@@ -14,12 +14,12 @@ namespace Postyou\ContaoEasyPopupBundle;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
-use Symfony\Component\HttpKernel\Bundle\AbstractBundle;
+use Symfony\Component\HttpKernel\Bundle\Bundle;
 
-class PostyouContaoEasyPopupBundle extends AbstractBundle
+class PostyouContaoEasyPopupBundle extends Bundle
 {
-    public function loadExtension(array $config, ContainerConfigurator $container, ContainerBuilder $builder): void
+    public function getPath(): string
     {
-        $container->import('../config/services.php');
+        return \dirname(__DIR__);
     }
 }

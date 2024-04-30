@@ -16,10 +16,10 @@
     "require": {
         "php": "^8.2",
         "composer-runtime-api": "^2.0",
-        "contao/core-bundle": "^5.3",
-        "symfony/asset": "^6.4",
-        "symfony/dependency-injection": "^6.4",
-        "symfony/http-kernel": "^6.4",
+        "contao/core-bundle": "^4.13 || ^5.3",
+        "symfony/asset": "^5.4 || ^6.4",
+        "symfony/dependency-injection": "^5.4 || ^6.4",
+        "symfony/http-kernel": "^5.4 || ^6.4",
         "terminal42/contao-node": "^1.5",
         "twig/twig": "^3.8"
     },
