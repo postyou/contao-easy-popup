@@ -15,6 +15,11 @@ This adds easy to use popups to the [Contao CMS](https://www.contao.org).
 
 ## Configuration
 
-You can configure the popup by activating the `Easy popup settings` checkbox within the node. There it is possible to add css classes to the popup container via the Style Manager (if installed) or in the `Popup CSS-Class` field
+You can configure the popup by activating the `Easy popup settings` checkbox within the node.
+
+-   `CSS-Class`: Add CSS classes to the popup container via the Style Manager (if installed) or the `Popup CSS-Class` field.
+-   `Delay`: Enter a delay that should pass before the popup is displayed automatically.
+-   `Timeout`: Enter a timeout in which the popup should not be displayed again.
+-   `Show before leaving the page`: Activate the checkbox to show the popup before the user leaves the page.
 
 You can also extend the `easy_popup/popup.html.twig` template to change the popup container.
