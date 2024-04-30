@@ -1,10 +1,12 @@
 import { terser } from 'rollup-plugin-terser';
+import outputManifest from 'rollup-plugin-output-manifest';
 
 export default {
     input: `assets/easy-popup.js`,
     output: {
-        file: `public/easy-popup.min.js`,
+        dir: 'public/',
+        entryFileNames: '[name].[hash].min.js',
         format: 'iife',
     },
-    plugins: [terser()],
+    plugins: [terser(), outputManifest()],
 };
