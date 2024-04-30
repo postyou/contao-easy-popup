@@ -14,7 +14,7 @@
         "source": "https://github.com/postyou/contao-easy-popup"
     },
     "require": {
-        "php": "^8.1",
+        "php": "^8.2",
         "composer-runtime-api": "^2.0",
         "contao/core-bundle": "^5.3",
         "symfony/asset": "^6.4",
