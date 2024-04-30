@@ -36,10 +36,6 @@ class ExtendStyleManagerListener
     #[AsHook('styleManagerIsVisibleGroup')]
     public function isVisibleGroup(StyleManagerModel $group, string $table): bool
     {
-        if ('tl_node' === $table && (bool) $group->extendNode) {
-            return true;
-        }
-
-        return false;
+        return 'tl_node' === $table && (bool) $group->extendNode;
     }
 }
