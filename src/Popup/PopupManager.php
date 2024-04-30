@@ -48,10 +48,11 @@ class PopupManager
         self::$locked[$nodeId] = true;
 
         $nodeModel = NodeModel::findOneBy(['id=?', 'type=?'], [$nodeId, NodeModel::TYPE_CONTENT]);
+        $delay = $this->getTimeFromInputUnit($nodeModel->popupDelay);
 
         $attrs = (new HtmlAttributes())
             ->setIfExists('data-timeout', $this->getTimeFromInputUnit($nodeModel->popupTimeout))
-            ->setIfExists('data-delay', $this->getTimeFromInputUnit($nodeModel->popupDelay))
+            ->set('data-delay', $delay, $delay >= 0)
             ->setIfExists('data-show-on-leave', $nodeModel->showPopupOnLeave)
         ;
 
@@ -67,12 +68,12 @@ class PopupManager
         return $popup;
     }
 
-    protected function getTimeFromInputUnit(string $input): int
+    protected function getTimeFromInputUnit(string $input): false|int
     {
         $input = StringUtil::deserialize($input, true);
 
-        if (!isset($input['value'], $input['unit'])) {
-            return 0;
+        if (!isset($input['value'], $input['unit']) || !is_numeric($input['value'])) {
+            return false;
         }
 
         $value = (int) $input['value'];

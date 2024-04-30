@@ -1,19 +1,34 @@
 // @ts-check
 class EasyPopup {
+    /** @type {HTMLDialogElement} */
+    popup;
+
+    /** @type {number} */
+    timeout = 0;
+
+    /** @type {boolean} */
+    showOnLeave = false;
+
+    /** @type {number|false} */
+    delay = false;
+
     /**
      * @param {HTMLDialogElement} popup
      */
     constructor(popup) {
         this.popup = popup;
         this.timeout = parseInt(this.popup.dataset.timeout || '0');
-        this.delay = parseInt(this.popup.dataset.delay || '0');
         this.showOnLeave = this.popup.dataset.showOnLeave !== undefined;
+
+        if ('delay' in this.popup.dataset) {
+            this.delay = parseInt(this.popup.dataset.delay || '0');
+        }
 
         this.popup.addEventListener('close', this.#onClose);
 
         if (this.showOnLeave) {
             this.#showOnMouseLeave();
-        } else if (this.delay) {
+        } else if (this.delay !== false) {
             this.#showAfterDelay();
         }
     }
@@ -65,13 +80,15 @@ class EasyPopup {
     }
 
     /**
-     * @param {number} delay
+     * @param {number|false} delay
      */
-    showModal(delay = 0) {
-        setTimeout(() => {
+    showModal(delay = false) {
+        const show = () => {
             this.popup.showModal();
             document.documentElement.classList.add('easy-popup-open');
-        }, delay);
+        };
+
+        delay !== false ? setTimeout(show, delay) : show();
     }
 
     #onClose() {
