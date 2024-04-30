@@ -27,9 +27,9 @@
     </dialog>
 {% endblock %}
 
-{% if not searchable|default %}
+{% if not searchable|default -%}
 <!-- indexer::continue -->
-{%- endif %}
+{% endif %}
 
 {% block script %}
     {% add "easy_popup_js" to body %}
