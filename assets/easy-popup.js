@@ -51,12 +51,13 @@ class EasyPopup {
 
             if (e.clientY < 10) {
                 document.removeEventListener('mouseleave', handleMouseLeave);
-                this.showModal(this.delay);
+                this.showModal();
                 this.#setTimeout();
             }
         };
 
-        document.addEventListener('mouseleave', handleMouseLeave);
+        const registerMouseLeave = () => document.addEventListener('mouseleave', handleMouseLeave);
+        this.delay !== false ? setTimeout(registerMouseLeave, this.delay) : registerMouseLeave();
     }
 
     #setTimeout() {
