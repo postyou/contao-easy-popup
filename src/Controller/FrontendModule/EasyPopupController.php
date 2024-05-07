@@ -33,7 +33,7 @@ class EasyPopupController extends AbstractFrontendModuleController
         $nodeId = (int) $model->popup;
         $popup = $this->popupManager->generate($nodeId);
 
-        $template->set('popup', $popup);
+        $template->popup = $popup;
 
         // Don't add the popup to the end of the body
         $GLOBALS['TL_BODY']['easy-popup-'.$nodeId] = '';
