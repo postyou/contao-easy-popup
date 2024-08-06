@@ -105,9 +105,23 @@ function initEasyPopups() {
     popups.forEach((popup) => popupMap.set('#' + popup.id, new EasyPopup(popup)));
 
     window.addEventListener('click', (e) => {
-        if (e.target instanceof HTMLAnchorElement && popupMap.has(e.target.hash)) {
+        let hash = null;
+
+        if (e.target instanceof HTMLAnchorElement) {
+            hash = e.target.hash;
+        } else if (e.target instanceof HTMLElement) {
+            const anchor = e.target.closest('a[href^="#easy-popup-"]');
+
+            if (anchor instanceof HTMLAnchorElement) {
+                hash = anchor.hash;
+            }
+        } else {
+            return;
+        }
+
+        if (popupMap.has(hash)) {
             e.preventDefault();
-            popupMap.get(e.target.hash).showModal();
+            popupMap.get(hash).showModal();
         }
     });
 }
