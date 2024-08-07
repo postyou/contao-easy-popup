@@ -24,35 +24,35 @@ class EasyPopup {
             this.delay = parseInt(this.popup.dataset.delay || '0');
         }
 
-        this.popup.addEventListener('close', this.#onClose);
+        this.popup.addEventListener('close', this.onClose);
 
         if (this.showOnLeave) {
-            this.#showOnMouseLeave();
+            this.showOnMouseLeave();
         } else if (this.delay !== false) {
-            this.#showAfterDelay();
+            this.showAfterDelay();
         }
     }
 
-    #showAfterDelay() {
-        if (!this.#isTimeoutActive()) {
+    showAfterDelay() {
+        if (!this.isTimeoutActive()) {
             this.showModal(this.delay);
-            this.#setTimeout();
+            this.setTimeout();
         }
     }
 
-    #showOnMouseLeave() {
+    showOnMouseLeave() {
         /**
          * @param {MouseEvent} e
          */
         const handleMouseLeave = (e) => {
-            if (this.#isTimeoutActive()) {
+            if (this.isTimeoutActive()) {
                 return;
             }
 
             if (e.clientY < 10) {
                 document.removeEventListener('mouseleave', handleMouseLeave);
                 this.showModal();
-                this.#setTimeout();
+                this.setTimeout();
             }
         };
 
@@ -60,11 +60,11 @@ class EasyPopup {
         this.delay !== false ? setTimeout(registerMouseLeave, this.delay) : registerMouseLeave();
     }
 
-    #setTimeout() {
+    setTimeout() {
         localStorage.setItem(this.popup.id, Date.now().toString());
     }
 
-    #isTimeoutActive() {
+    isTimeoutActive() {
         const expiry = localStorage.getItem(this.popup.id);
 
         if (!expiry) {
@@ -92,7 +92,7 @@ class EasyPopup {
         delay !== false ? setTimeout(show, delay) : show();
     }
 
-    #onClose() {
+    onClose() {
         document.documentElement.classList.remove('easy-popup-open');
     }
 }
