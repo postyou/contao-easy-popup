@@ -8,23 +8,25 @@
 {%- endif %}
 
 {% block popup %}
-    <dialog{{ popup_attributes }}>
-        <div{{ attrs(popup_inside_attributes|default).addClass('easy-popup-inside') }}>
-            {% block close %}
-                <form method="dialog">
-                    <button{{ attrs(popup_close_attributes|default).addClass('easy-popup-close') }}>
-                        {%- block close_icon %}&times;{% endblock -%}
-                    </button>
-                </form>
-            {% endblock %}
+    {% if published %}
+        <dialog{{ popup_attributes }}>
+            <div{{ attrs(popup_inside_attributes|default).addClass('easy-popup-inside') }}>
+                {% block close %}
+                    <form method="dialog">
+                        <button{{ attrs(popup_close_attributes|default).addClass('easy-popup-close') }}>
+                            {%- block close_icon %}&times;{% endblock -%}
+                        </button>
+                    </form>
+                {% endblock %}
 
-            {% block inner %}
-                <div{{ attrs(popup_content_attributes|default).addClass('easy-popup-content') }}>
-                    {{ content|raw }}
-                </div>
-            {% endblock %}
-        </div>
-    </dialog>
+                {% block inner %}
+                    <div{{ attrs(popup_content_attributes|default).addClass('easy-popup-content') }}>
+                        {{ content|raw }}
+                    </div>
+                {% endblock %}
+            </div>
+        </dialog>
+    {% endif %}
 {% endblock %}
 
 {% if not searchable|default -%}
