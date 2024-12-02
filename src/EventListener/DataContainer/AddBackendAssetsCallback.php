@@ -28,5 +28,7 @@ class AddBackendAssetsCallback
         if (InstalledVersions::isInstalled('oveleon/contao-component-style-manager')) {
             $GLOBALS['TL_CSS'][] = $this->packages->getUrl('backend.css', 'postyou_contao_easy_popup');
         }
+
+        $GLOBALS['TL_JAVASCRIPT'][] = $this->packages->getUrl('backend.js', 'postyou_contao_easy_popup');
     }
 }
