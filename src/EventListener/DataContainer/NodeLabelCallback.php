@@ -20,10 +20,10 @@ use Terminal42\NodeBundle\Model\NodeModel;
 class NodeLabelCallback
 {
     public function __construct(
-        private Locales $locales,
+        private readonly Locales $locales,
         #[Autowire(service: 'codefog_tags.manager.terminal42_node')]
-        private ManagerInterface $tagsManager,
-        private TranslatorInterface $translator,
+        private readonly ManagerInterface $tagsManager,
+        private readonly TranslatorInterface $translator,
     ) {}
 
     #[AsCallback('tl_node', 'list.label.label')]
