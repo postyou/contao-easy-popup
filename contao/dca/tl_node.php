@@ -11,16 +11,19 @@ declare(strict_types=1);
  */
 
 use Composer\InstalledVersions;
+use Contao\ArrayUtil;
 use Contao\CoreBundle\DataContainer\PaletteManipulator;
 use Oveleon\ContaoComponentStyleManager\StyleManager\StyleManager;
 
 $GLOBALS['TL_DCA']['tl_node']['palettes']['__selector__'][] = 'easyPopupSettings';
 $GLOBALS['TL_DCA']['tl_node']['subpalettes']['easyPopupSettings'] = 'popupDelay,popupTimeout,showPopupOnLeave,cssClass';
 
+ArrayUtil::arrayInsert($GLOBALS['TL_DCA']['tl_node']['list']['operations'], -1, 'toggle');
+
 $GLOBALS['TL_DCA']['tl_node']['fields']['published'] = [
     'inputType' => 'checkbox',
     'toggle' => true,
-    'eval' => ['tl_class' => 'w25 m12'],
+    'eval' => ['tl_class' => 'clr'],
     'sql' => ['type' => 'boolean', 'default' => true],
 ];
 
@@ -61,6 +64,7 @@ $GLOBALS['TL_DCA']['tl_node']['fields']['cssClass'] = [
 PaletteManipulator::create()
     ->addLegend('easy_popup_legend', 'name_legend', PaletteManipulator::POSITION_AFTER)
     ->addField('easyPopupSettings', 'easy_popup_legend', PaletteManipulator::POSITION_APPEND)
+    ->addField('published', 'easy_popup_legend', PaletteManipulator::POSITION_APPEND)
     ->applyToPalette('default', 'tl_node')
 ;
 

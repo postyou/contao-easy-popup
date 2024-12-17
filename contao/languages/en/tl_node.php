@@ -20,3 +20,11 @@ $GLOBALS['TL_LANG']['tl_node']['popupDelay'] = ['Delay', 'Here you can enter the
 $GLOBALS['TL_LANG']['tl_node']['popupTimeout'] = ['Timeout', 'Here you can enter the time in which the popup should not be displayed again.'];
 $GLOBALS['TL_LANG']['tl_node']['showPopupOnLeave'] = ['Show before leaving the page', 'Show the popup before the user leaves the page.'];
 $GLOBALS['TL_LANG']['tl_node']['styleManager'] = ['Style Manager'];
+$GLOBALS['TL_LANG']['tl_node']['published'] = ['Publish popup', 'Make the popup publicly visible on the website.'];
+
+// Operations
+$GLOBALS['TL_LANG']['tl_node']['toggle'] = [
+    'Publish/unpublish node',
+    'Unpublish node ID %s',
+    'Publish node ID %s',
+];

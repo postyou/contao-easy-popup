@@ -47,20 +47,24 @@ class PopupManager
 
         self::$locked[$nodeId] = true;
 
-        $nodeModel = NodeModel::findOneBy(['id=?', 'type=?'], [$nodeId, NodeModel::TYPE_CONTENT]);
-        $delay = $this->getTimeFromInputUnit($nodeModel->popupDelay);
+        $popup = '';
+        $nodeModel = NodeModel::findOneBy(['id=?', 'type=?', 'published=1'], [$nodeId, NodeModel::TYPE_CONTENT]);
 
-        $attrs = (new HtmlAttributes())
-            ->setIfExists('data-timeout', $this->getTimeFromInputUnit($nodeModel->popupTimeout))
-            ->set('data-delay', $delay, $delay >= 0)
-            ->setIfExists('data-show-on-leave', $nodeModel->showPopupOnLeave)
-        ;
+        if (null !== $nodeModel) {
+            $delay = $this->getTimeFromInputUnit($nodeModel->popupDelay);
 
-        $popup = $this->twig->render('@Contao/easy_popup/popup.html.twig', [
-            ...$nodeModel->row(),
-            'content' => $this->nodeManager->generateSingle($nodeId),
-            'popup_attributes' => $attrs,
-        ]);
+            $attrs = (new HtmlAttributes())
+                ->setIfExists('data-timeout', $this->getTimeFromInputUnit($nodeModel->popupTimeout))
+                ->set('data-delay', $delay, $delay >= 0)
+                ->setIfExists('data-show-on-leave', $nodeModel->showPopupOnLeave)
+            ;
+
+            $popup = $this->twig->render('@Contao/easy_popup/popup.html.twig', [
+                ...$nodeModel->row(),
+                'content' => $this->nodeManager->generateSingle($nodeId),
+                'popup_attributes' => $attrs,
+            ]);
+        }
 
         self::$popupCache[$nodeId] = $popup;
         unset(self::$locked[$nodeId]);
