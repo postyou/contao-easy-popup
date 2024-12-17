@@ -29,7 +29,7 @@ class NodeLabelCallback
     #[AsCallback('tl_node', 'list.label.label')]
     public function addIcon(array $row, string $label, DataContainer $dc, string $imageAttribute = '', bool $returnImage = false, bool|null $isProtected = null): string
     {
-        $published = $row['easyPopupSettings'] ? $row['published'] : true;
+        $published = $row['easyPopupSettings'] ? $row['popupPublished'] : true;
 
         $image = NodeModel::TYPE_CONTENT === $row['type']
             ? ($published ? 'articles.svg' : 'articles_1.svg')
@@ -83,7 +83,7 @@ class NodeLabelCallback
             return;
         }
 
-        if (!$record['published']) {
+        if (!$record['popupPublished']) {
             $config['icon'] = 'invisible.svg';
         }
 
@@ -95,6 +95,6 @@ class NodeLabelCallback
 
         $titleDisabled = sprintf($label[2], $record['id']);
 
-        $config->setHtml('<a href="'.Backend::addToUrl($config['href'].'&amp;id='.$record['id']).'" title="'.StringUtil::specialchars($record['published'] ? $config['title'] : $titleDisabled).'" data-title="'.StringUtil::specialchars($config['title']).'" data-title-disabled="'.StringUtil::specialchars($titleDisabled).'" data-action="contao--scroll-offset#store" onclick="return AjaxRequest.toggleField(this,true)">'.Image::getHtml($config['icon'], $config['label'], 'data-icon="visible.svg" data-icon-disabled="invisible.svg" data-state="'.($record['published'] ? 1 : 0).'"').'</a> ');
+        $config->setHtml('<a href="'.Backend::addToUrl($config['href'].'&amp;id='.$record['id']).'" title="'.StringUtil::specialchars($record['popupPublished'] ? $config['title'] : $titleDisabled).'" data-title="'.StringUtil::specialchars($config['title']).'" data-title-disabled="'.StringUtil::specialchars($titleDisabled).'" data-action="contao--scroll-offset#store" onclick="return AjaxRequest.toggleField(this,true)">'.Image::getHtml($config['icon'], $config['label'], 'data-icon="visible.svg" data-icon-disabled="invisible.svg" data-state="'.($record['popupPublished'] ? 1 : 0).'"').'</a> ');
     }
 }

@@ -16,11 +16,11 @@ use Contao\CoreBundle\DataContainer\PaletteManipulator;
 use Oveleon\ContaoComponentStyleManager\StyleManager\StyleManager;
 
 $GLOBALS['TL_DCA']['tl_node']['palettes']['__selector__'][] = 'easyPopupSettings';
-$GLOBALS['TL_DCA']['tl_node']['subpalettes']['easyPopupSettings'] = 'popupDelay,popupTimeout,showPopupOnLeave,cssClass,published';
+$GLOBALS['TL_DCA']['tl_node']['subpalettes']['easyPopupSettings'] = 'popupDelay,popupTimeout,showPopupOnLeave,cssClass,popupPublished';
 
 ArrayUtil::arrayInsert($GLOBALS['TL_DCA']['tl_node']['list']['operations'], -1, 'toggle');
 
-$GLOBALS['TL_DCA']['tl_node']['fields']['published'] = [
+$GLOBALS['TL_DCA']['tl_node']['fields']['popupPublished'] = [
     'inputType' => 'checkbox',
     'toggle' => true,
     'eval' => ['tl_class' => 'clr'],

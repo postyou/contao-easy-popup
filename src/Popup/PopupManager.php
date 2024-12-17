@@ -53,7 +53,7 @@ class PopupManager
         $columns = ['id=?', 'type=?'];
 
         if (!$this->tokenChecker->isPreviewMode()) {
-            $columns[] = '((easyPopupSettings=1 AND published=1) OR easyPopupSettings=0)';
+            $columns[] = '((easyPopupSettings=1 AND popupPublished=1) OR easyPopupSettings=0)';
         }
 
         $nodeModel = NodeModel::findOneBy($columns, [$nodeId, NodeModel::TYPE_CONTENT]);
