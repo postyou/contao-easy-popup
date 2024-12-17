@@ -37,7 +37,7 @@ class PublishedMigration extends AbstractMigration
 
     public function run(): MigrationResult
     {
-        $this->connection->executeStatement("ALTER TABLE tl_node ADD popupPublished TINYINT(1) DEFAULT 1 NOT NULL");
+        $this->connection->executeStatement('ALTER TABLE tl_node ADD popupPublished TINYINT(1) DEFAULT 1 NOT NULL');
 
         $this->connection->executeStatement("UPDATE tl_node SET easyPopupSettings='1', popupPublished='0' WHERE published='0' AND type='content'");
 
