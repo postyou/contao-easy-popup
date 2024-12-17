@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Postyou\ContaoEasyPopupBundle\EventListener\DataContainer;
 
 use Codefog\HasteBundle\Model\DcaRelationsModel;
@@ -9,8 +11,8 @@ use Contao\CoreBundle\DataContainer\DataContainerOperation;
 use Contao\CoreBundle\DependencyInjection\Attribute\AsCallback;
 use Contao\CoreBundle\Intl\Locales;
 use Contao\DataContainer;
-use Contao\StringUtil;
 use Contao\Image;
+use Contao\StringUtil;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Terminal42\NodeBundle\Model\NodeModel;
@@ -22,8 +24,7 @@ class NodeLabelCallback
         #[Autowire(service: 'codefog_tags.manager.terminal42_node')]
         private ManagerInterface $tagsManager,
         private TranslatorInterface $translator,
-    ) {
-    }
+    ) {}
 
     #[AsCallback('tl_node', 'list.label.label')]
     public function addIcon(array $row, string $label, DataContainer $dc, string $imageAttribute = '', bool $returnImage = false, bool|null $isProtected = null): string
@@ -90,8 +91,8 @@ class NodeLabelCallback
             $this->translator->trans('tl_node.toggle.2', domain: 'contao_default'),
         ];
 
-        $titleDisabled = \sprintf($label[2], $record['id']);
+        $titleDisabled = sprintf($label[2], $record['id']);
 
-        $config->setHtml('<a href="' . Backend::addToUrl($config['href'] . '&amp;id=' . $record['id']) . '" title="' . StringUtil::specialchars($record['published'] ? $config['title'] : $titleDisabled) . '" data-title="' . StringUtil::specialchars($config['title']) . '" data-title-disabled="' . StringUtil::specialchars($titleDisabled) . '" data-action="contao--scroll-offset#store" onclick="return AjaxRequest.toggleField(this,true)">' . Image::getHtml($config['icon'], $config['label'], 'data-icon="visible.svg" data-icon-disabled="invisible.svg" data-state="' . ($record['published'] ? 1 : 0) . '"') . '</a> ');
+        $config->setHtml('<a href="'.Backend::addToUrl($config['href'].'&amp;id='.$record['id']).'" title="'.StringUtil::specialchars($record['published'] ? $config['title'] : $titleDisabled).'" data-title="'.StringUtil::specialchars($config['title']).'" data-title-disabled="'.StringUtil::specialchars($titleDisabled).'" data-action="contao--scroll-offset#store" onclick="return AjaxRequest.toggleField(this,true)">'.Image::getHtml($config['icon'], $config['label'], 'data-icon="visible.svg" data-icon-disabled="invisible.svg" data-state="'.($record['published'] ? 1 : 0).'"').'</a> ');
     }
 }

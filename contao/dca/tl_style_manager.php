@@ -11,12 +11,12 @@ declare(strict_types=1);
  */
 
 use Composer\InstalledVersions;
+use Contao\Controller;
 use Contao\CoreBundle\DataContainer\PaletteManipulator;
 
 if (InstalledVersions::isInstalled('oveleon/contao-component-style-manager')) {
+    Controller::loadDataContainer('tl_style_manager');
 
-    \Contao\Controller::loadDataContainer('tl_style_manager');
-    
     $GLOBALS['TL_DCA']['tl_style_manager']['fields']['extendNode'] = [
         'inputType' => 'checkbox',
         'eval' => ['tl_class' => 'clr'],
