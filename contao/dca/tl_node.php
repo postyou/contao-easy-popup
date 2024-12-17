@@ -16,7 +16,7 @@ use Contao\CoreBundle\DataContainer\PaletteManipulator;
 use Oveleon\ContaoComponentStyleManager\StyleManager\StyleManager;
 
 $GLOBALS['TL_DCA']['tl_node']['palettes']['__selector__'][] = 'easyPopupSettings';
-$GLOBALS['TL_DCA']['tl_node']['subpalettes']['easyPopupSettings'] = 'popupDelay,popupTimeout,showPopupOnLeave,cssClass';
+$GLOBALS['TL_DCA']['tl_node']['subpalettes']['easyPopupSettings'] = 'popupDelay,popupTimeout,showPopupOnLeave,cssClass,published';
 
 ArrayUtil::arrayInsert($GLOBALS['TL_DCA']['tl_node']['list']['operations'], -1, 'toggle');
 
@@ -64,7 +64,6 @@ $GLOBALS['TL_DCA']['tl_node']['fields']['cssClass'] = [
 PaletteManipulator::create()
     ->addLegend('easy_popup_legend', 'name_legend', PaletteManipulator::POSITION_AFTER)
     ->addField('easyPopupSettings', 'easy_popup_legend', PaletteManipulator::POSITION_APPEND)
-    ->addField('published', 'easy_popup_legend', PaletteManipulator::POSITION_APPEND)
     ->applyToPalette('default', 'tl_node')
 ;
 

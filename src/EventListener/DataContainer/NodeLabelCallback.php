@@ -29,8 +29,10 @@ class NodeLabelCallback
     #[AsCallback('tl_node', 'list.label.label')]
     public function addIcon(array $row, string $label, DataContainer $dc, string $imageAttribute = '', bool $returnImage = false, bool|null $isProtected = null): string
     {
+        $published = $row['easyPopupSettings'] ? $row['published'] : true;
+
         $image = NodeModel::TYPE_CONTENT === $row['type']
-            ? ($row['published'] ? 'articles.svg' : 'articles_1.svg')
+            ? ($published ? 'articles.svg' : 'articles_1.svg')
             : 'folderC.svg';
 
         $imageAttribute .= ' data-icon="articles.svg" data-icon-disabled="articles_1.svg"';
@@ -75,7 +77,7 @@ class NodeLabelCallback
     {
         $record = $config->getRecord();
 
-        if (NodeModel::TYPE_FOLDER === $record['type']) {
+        if (NodeModel::TYPE_FOLDER === $record['type'] || !$record['easyPopupSettings']) {
             $config->setHtml('');
 
             return;

@@ -12,6 +12,7 @@ declare(strict_types=1);
 
 namespace Postyou\ContaoEasyPopupBundle\Popup;
 
+use Contao\CoreBundle\Security\Authentication\Token\TokenChecker;
 use Contao\CoreBundle\String\HtmlAttributes;
 use Contao\StringUtil;
 use Terminal42\NodeBundle\Model\NodeModel;
@@ -33,6 +34,7 @@ class PopupManager
     public function __construct(
         protected readonly Environment $twig,
         protected readonly NodeManager $nodeManager,
+        protected readonly TokenChecker $tokenChecker,
     ) {}
 
     public function generate(int $nodeId): string
@@ -48,7 +50,13 @@ class PopupManager
         self::$locked[$nodeId] = true;
 
         $popup = '';
-        $nodeModel = NodeModel::findOneBy(['id=?', 'type=?', 'published=1'], [$nodeId, NodeModel::TYPE_CONTENT]);
+        $columns = ['id=?', 'type=?'];
+
+        if (!$this->tokenChecker->isPreviewMode()) {
+            $columns[] = '((easyPopupSettings=1 AND published=1) OR easyPopupSettings=0)';
+        }
+
+        $nodeModel = NodeModel::findOneBy($columns, [$nodeId, NodeModel::TYPE_CONTENT]);
 
         if (null !== $nodeModel) {
             $delay = $this->getTimeFromInputUnit($nodeModel->popupDelay);
