@@ -25,7 +25,7 @@ class Plugin implements BundlePluginInterface
     {
         return [
             BundleConfig::create(PostyouContaoEasyPopupBundle::class)
-                ->setLoadAfter([ContaoCoreBundle::class, Terminal42NodeBundle::class]),
+                ->setLoadAfter([ContaoCoreBundle::class, Terminal42NodeBundle::class, "Oveleon\ContaoComponentStyleManager\ContaoComponentStyleManager"]),
         ];
     }
 }

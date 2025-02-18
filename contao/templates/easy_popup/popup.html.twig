@@ -3,25 +3,23 @@
 {%- endif %}
 
 {% block popup %}
-    {% if published %}
-        <dialog id="easy-popup-{{ id }}" class="easy-popup-container" {{ popup_attributes }}>
-            <div class="easy-popup-inside">
-                {% block close %}
-                    <form method="dialog">
-                        <button class="easy-popup-close">
-                            {%- block close_icon %}&times;{% endblock -%}
-                        </button>
-                    </form>
-                {% endblock %}
+    <dialog id="easy-popup-{{ id }}" class="easy-popup-container" {{ popup_attributes }}>
+        <div class="easy-popup-inside">
+            {% block close %}
+                <form method="dialog">
+                    <button class="easy-popup-close">
+                        {%- block close_icon %}&times;{% endblock -%}
+                    </button>
+                </form>
+            {% endblock %}
 
-                {% block inner %}
-                    <div class="easy-popup-content">
-                        {{ content|raw }}
-                    </div>
-                {% endblock %}
-            </div>
-        </dialog>
-    {% endif %}
+            {% block inner %}
+                <div class="easy-popup-content">
+                    {{ content|raw }}
+                </div>
+            {% endblock %}
+        </div>
+    </dialog>
 {% endblock %}
 
 {% if not searchable|default -%}
