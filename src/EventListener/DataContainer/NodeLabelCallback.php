@@ -26,7 +26,7 @@ class NodeLabelCallback
         private readonly TranslatorInterface $translator,
     ) {}
 
-    #[AsCallback('tl_node', 'list.label.label')]
+    #[AsCallback('tl_node', 'list.label.label', priority: 100)]
     public function addIcon(array $row, string $label, DataContainer $dc, string $imageAttribute = '', bool $returnImage = false, bool|null $isProtected = null): string
     {
         $published = $row['easyPopupSettings'] ? $row['popupPublished'] : true;
@@ -47,7 +47,7 @@ class NodeLabelCallback
 
         // Generate the languages
         foreach (StringUtil::trimsplit(',', $row['languages']) as $language) {
-            $languages[] = $allLanguages[$language];
+            $languages[] = $allLanguages[$language] ?? $language;
         }
 
         $tags = [];
@@ -61,14 +61,31 @@ class NodeLabelCallback
             }
         }
 
-        return sprintf(
-            '%s <a href="%s" title="%s">%s</a>%s%s',
+        $extras = [];
+
+        if ([] !== $languages) {
+            $extras[] = implode(', ', $languages);
+        }
+
+        if ([] !== $tags) {
+            $extras[] = implode(', ', $tags);
+        }
+
+        if (NodeModel::TYPE_CONTENT === $row['type']) {
+            $extras[] = \sprintf('ID: %d', $row['id']);
+
+            if ($row['alias']) {
+                $extras[] = \sprintf('%s: %s', $GLOBALS['TL_LANG']['tl_node']['alias'][0], $row['alias']);
+            }
+        }
+
+        return \sprintf(
+            '%s <a href="%s" title="%s">%s</a>%s',
             Image::getHtml($image, '', $imageAttribute),
             Backend::addToUrl('nn='.$row['id']),
             StringUtil::specialchars($GLOBALS['TL_LANG']['MSC']['selectNode']),
             $label,
-            \count($languages) > 0 ? sprintf(' <span class="tl_gray" style="margin-left:3px;">[%s]</span>', implode(', ', $languages)) : '',
-            \count($tags) > 0 ? sprintf(' <span class="tl_gray" style="margin-left:3px;">[%s]</span>', implode(', ', $tags)) : '',
+            $extras ? ' '.implode('', array_map(static fn (string $v) => \sprintf('<span class="tl_gray" style="margin-left:3px;">[%s]</span>', $v), $extras)) : '',
         );
     }
 

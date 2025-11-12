@@ -20,7 +20,7 @@
         "symfony/asset": "^6.4",
         "symfony/dependency-injection": "^6.4",
         "symfony/http-kernel": "^6.4",
-        "terminal42/contao-node": "^1.5",
+        "terminal42/contao-node": "^2.0",
         "twig/twig": "^3.8"
     },
     "require-dev": {
