@@ -17,9 +17,9 @@
         "php": "^8.2",
         "composer-runtime-api": "^2.0",
         "contao/core-bundle": "^5.3",
-        "symfony/asset": "^6.4",
-        "symfony/dependency-injection": "^6.4",
-        "symfony/http-kernel": "^6.4",
+        "symfony/asset": "^6.4 || ^7.4",
+        "symfony/dependency-injection": "^6.4 || ^7.4",
+        "symfony/http-kernel": "^6.4 || ^7.4",
         "terminal42/contao-node": "^2.0",
         "twig/twig": "^3.8"
     },
