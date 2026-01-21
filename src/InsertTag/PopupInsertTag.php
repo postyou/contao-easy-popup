@@ -34,7 +34,7 @@ class PopupInsertTag
         }
 
         if (!\is_int($nodeId)) {
-            throw new InvalidInsertTagException(sprintf('Invalid node id %s for popup insert tag.', $nodeId));
+            throw new InvalidInsertTagException(\sprintf('Invalid node id %s for popup insert tag.', $nodeId));
         }
 
         $this->addPopupToPage($nodeId, 'easy-popup-'.$nodeId);

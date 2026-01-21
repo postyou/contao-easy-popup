@@ -110,7 +110,7 @@ class NodeLabelCallback
             $this->translator->trans('tl_node.toggle.2', domain: 'contao_default'),
         ];
 
-        $titleDisabled = sprintf($label[2], $record['id']);
+        $titleDisabled = \sprintf($label[2], $record['id']);
 
         $config->setHtml('<a href="'.Backend::addToUrl($config['href'].'&amp;id='.$record['id']).'" title="'.StringUtil::specialchars($record['popupPublished'] ? $config['title'] : $titleDisabled).'" data-title="'.StringUtil::specialchars($config['title']).'" data-title-disabled="'.StringUtil::specialchars($titleDisabled).'" data-action="contao--scroll-offset#store" onclick="return AjaxRequest.toggleField(this,true)">'.Image::getHtml($config['icon'], $config['label'], 'data-icon="visible.svg" data-icon-disabled="invisible.svg" data-state="'.($record['popupPublished'] ? 1 : 0).'"').'</a> ');
     }

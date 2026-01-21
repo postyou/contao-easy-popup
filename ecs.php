@@ -5,7 +5,6 @@ declare(strict_types=1);
 use PhpCsFixer\Fixer\Basic\SingleLineEmptyBodyFixer;
 use PhpCsFixer\Fixer\Comment\HeaderCommentFixer;
 use PhpCsFixer\Fixer\Whitespace\MethodChainingIndentationFixer;
-use PhpCsFixerCustomFixers\Fixer\MultilinePromotedPropertiesFixer;
 use Symplify\EasyCodingStandard\Config\ECSConfig;
 use Symplify\EasyCodingStandard\ValueObject\Option;
 
@@ -26,7 +25,6 @@ return ECSConfig::configure()
         php80MigrationRisky: true
     )
     ->withConfiguredRule(HeaderCommentFixer::class, ['header' => $header])
-    ->withConfiguredRule(MultilinePromotedPropertiesFixer::class, ['keep_blank_lines' => true])
     ->withRules([SingleLineEmptyBodyFixer::class])
     ->withSkip([
         MethodChainingIndentationFixer::class => [

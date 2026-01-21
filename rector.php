@@ -2,16 +2,15 @@
 
 declare(strict_types=1);
 
+use Contao\Rector\Set\ContaoLevelSetList;
 use Rector\Config\RectorConfig;
 
-return static function (RectorConfig $rectorConfig): void {
-    $rectorConfig->sets([__DIR__.'/vendor/contao/rector/config/contao.php']);
-
-    $rectorConfig->paths([
-        __DIR__.'/src',
-        __DIR__.'/contao',
+return RectorConfig::configure()
+    ->withPaths([
+        'contao',
+        'src',
+    ])
+    ->withComposerBased(symfony: true, twig: true, doctrine: true)
+    ->withSets([
+        ContaoLevelSetList::UP_TO_CONTAO_53
     ]);
-
-    $rectorConfig->parallel();
-    $rectorConfig->cacheDirectory(sys_get_temp_dir().'/rector_cache');
-};
