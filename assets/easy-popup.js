@@ -24,7 +24,7 @@ class EasyPopup {
             this.delay = parseInt(this.popup.dataset.delay || '0');
         }
 
-        this.popup.addEventListener('close', this.onClose);
+        this.popup.addEventListener('close', () => this.onClose());
 
         if (this.showOnLeave) {
             this.showOnMouseLeave();
@@ -36,7 +36,6 @@ class EasyPopup {
     showAfterDelay() {
         if (!this.isTimeoutActive()) {
             this.showModal(this.delay);
-            this.setTimeout();
         }
     }
 
@@ -52,7 +51,6 @@ class EasyPopup {
             if (e.clientY < 10) {
                 document.removeEventListener('mouseleave', handleMouseLeave);
                 this.showModal();
-                this.setTimeout();
             }
         };
 
@@ -60,18 +58,18 @@ class EasyPopup {
         this.delay !== false ? setTimeout(registerMouseLeave, this.delay) : registerMouseLeave();
     }
 
-    setTimeout() {
+    startTimeout() {
         localStorage.setItem(this.popup.id, Date.now().toString());
     }
 
     isTimeoutActive() {
-        const expiry = localStorage.getItem(this.popup.id);
+        const closedAt = localStorage.getItem(this.popup.id);
 
-        if (!expiry) {
+        if (!closedAt) {
             return false;
         }
 
-        if (Date.now() > parseInt(expiry) + this.timeout) {
+        if (Date.now() > parseInt(closedAt) + this.timeout) {
             localStorage.removeItem(this.popup.id);
 
             return false;
@@ -94,6 +92,7 @@ class EasyPopup {
 
     onClose() {
         document.documentElement.classList.remove('easy-popup-open');
+        this.startTimeout();
     }
 }
 

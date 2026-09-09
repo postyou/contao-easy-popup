@@ -19,7 +19,7 @@ You can configure the popup by activating the `Easy popup settings` checkbox wit
 
 -   `CSS-Class`: Add CSS classes to the popup container via the Style Manager (if installed) or the `Popup CSS-Class` field.
 -   `Delay`: Enter a delay that should pass before the popup is displayed automatically.
--   `Timeout`: Enter a timeout in which the popup should not be displayed again.
+-   `Timeout`: Enter a timeout in which the popup should not be displayed again after the user has closed it. The timeout only starts when the popup is closed (close button or ESC key), so a popup the user never dismissed is shown again on the next page view.
 -   `Show before leaving the page`: Activate the checkbox to show the popup before the user leaves the page.
 
 You can also extend the `easy_popup/popup.html.twig` template to change the popup container.
